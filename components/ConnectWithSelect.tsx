@@ -13,8 +13,8 @@ function ChainSelect({
   displayDefault,
   chainIds,
 }: {
-  chainId: number
-  switchChain: (chainId: number) => void | undefined
+  chainId: number | undefined
+  switchChain: ((chainId: number) => (void | undefined | Promise<void>)) | undefined
   displayDefault: boolean
   chainIds: number[]
 }) {

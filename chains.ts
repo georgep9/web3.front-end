@@ -13,7 +13,7 @@ const MATIC: AddEthereumChainParameter['nativeCurrency'] = {
 }
 
 interface BasicChainInformation {
-  urls: string[]
+  urls: (string | undefined)[] | undefined
   name: string
 }
 
@@ -43,7 +43,7 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   }
 }
 
-export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
+export const CHAINS: { [chainId: number]: ExtendedChainInformation | BasicChainInformation } = {
   1: {
     urls: [
       process.env.infuraKey ? `https://mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
@@ -134,12 +134,12 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   },
 }
 
-export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: string[] }>(
+export const URLS: { [chainId: number]: (string | undefined)[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: (string | undefined)[] }>(
   (accumulator, chainId) => {
-    const validURLs: string[] = CHAINS[Number(chainId)].urls
+    const validURLs: (string | undefined)[] | undefined = CHAINS[Number(chainId)].urls
 
-    if (validURLs.length) {
-      accumulator[Number(chainId)] = validURLs
+    if (validURLs !== undefined && validURLs.length) {
+      accumulator[Number(chainId)] = validURLs.filter((url) => typeof url !== "undefined")
     }
 
     return accumulator
