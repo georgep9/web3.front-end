@@ -13,7 +13,7 @@ const MATIC: AddEthereumChainParameter['nativeCurrency'] = {
 }
 
 interface BasicChainInformation {
-  urls: (string | undefined)[] | undefined
+  urls: string[] | null
   name: string
 }
 
@@ -30,12 +30,12 @@ function isExtendedChainInformation(
 
 export function getAddChainParameters(chainId: number): AddEthereumChainParameter | number {
   const chainInformation = CHAINS[chainId]
-  if (isExtendedChainInformation(chainInformation)) {
+  if (isExtendedChainInformation(chainInformation) ) {
     return {
       chainId,
       chainName: chainInformation.name,
       nativeCurrency: chainInformation.nativeCurrency,
-      rpcUrls: chainInformation.urls,
+      rpcUrls: typeof chainInformation.urls !== null ? chainInformation.urls : new Array,
       blockExplorerUrls: chainInformation.blockExplorerUrls,
     }
   } else {
@@ -46,10 +46,10 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
 export const CHAINS: { [chainId: number]: ExtendedChainInformation | BasicChainInformation } = {
   1: {
     urls: [
-      process.env.infuraKey ? `https://mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
-      process.env.alchemyKey ? `https://eth-mainnet.alchemyapi.io/v2/${process.env.alchemyKey}` : undefined,
+      process.env.infuraKey ? `https://mainnet.infura.io/v3/${process.env.infuraKey}` : null,
+      process.env.alchemyKey ? `https://eth-mainnet.alchemyapi.io/v2/${process.env.alchemyKey}` : null,
       'https://cloudflare-eth.com',
-    ].filter((url) => url !== undefined),
+    ].filter((url) => url !== null),
     name: 'Mainnet',
   },
   3: {
@@ -134,12 +134,12 @@ export const CHAINS: { [chainId: number]: ExtendedChainInformation | BasicChainI
   },
 }
 
-export const URLS: { [chainId: number]: (string | undefined)[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: (string | undefined)[] }>(
+export const URLS: { [chainId: number]: (string)[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: (string)[] }>(
   (accumulator, chainId) => {
     const validURLs: (string | undefined)[] | undefined = CHAINS[Number(chainId)].urls
 
     if (validURLs !== undefined && validURLs.length) {
-      accumulator[Number(chainId)] = validURLs.filter((url) => typeof url !== "undefined")
+      accumulator[Number(chainId)] = validURLs.filter((url) => url !== null)
     }
 
     return accumulator
