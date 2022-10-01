@@ -1,18 +1,17 @@
 export function Card({ children }: { children: JSX.Element | JSX.Element[] }) {
   return (
     <div
+      className="card text-white bg-dark mb-3 mx-auto"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        width: '20rem',
-        padding: '1rem',
+        width: '16rem',
+        padding: '0.5rem',
         margin: '1rem',
         overflow: 'auto',
-        border: '1px solid'
       }}
     >
-      {children}
+      <div className="card-body">
+        <div className="card-text">{children}</div>
+      </div>
     </div>
   )
 }

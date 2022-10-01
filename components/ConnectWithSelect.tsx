@@ -14,25 +14,25 @@ function ChainSelect({
   chainIds,
 }: {
   chainId: number | undefined
-  switchChain: ((chainId: number) => (void | undefined | Promise<void>)) | undefined
+  switchChain: ((chainId: number) => void | undefined | Promise<void>) | undefined
   displayDefault: boolean
   chainIds: number[]
 }) {
   return (
-    <select
-      value={chainId}
-      onChange={(event) => {
-        switchChain?.(Number(event.target.value))
-      }}
-      disabled={switchChain === undefined}
-    >
-      {displayDefault ? <option value={-1}>Default Chain</option> : null}
-      {chainIds.map((chainId) => (
-        <option key={chainId} value={chainId}>
-          {CHAINS[chainId]?.name ?? chainId}
-        </option>
-      ))}
-    </select>
+    <div className="dropdown-menu">
+      <select
+        value={chainId}
+        onChange={(event) => void switchChain?.(Number(event.target.value))}
+        disabled={switchChain === undefined}
+      >
+        {displayDefault ? <option value={-1}>Default Chain</option> : null}
+        {chainIds.map((chainId) => (
+          <option className="dropdown-item" key={chainId} value={chainId}>
+            {CHAINS[chainId]?.name ?? chainId}
+          </option>
+        ))}
+      </select>
+    </div>
   )
 }
 
@@ -85,6 +85,7 @@ export function ConnectWithSelect({
         )}
         <div style={{ marginBottom: '1rem' }} />
         <button
+          className="btn btn-outline-primary"
           onClick={() =>
             connector instanceof GnosisSafe
               ? void connector.activate()
@@ -109,7 +110,9 @@ export function ConnectWithSelect({
           />
         )}
         <div style={{ marginBottom: '1rem' }} />
-        <button onClick={() => void connector.deactivate()}>Disconnect</button>
+        <button className="btn btn-lg btn-secondary" type="button" onClick={() => void connector.deactivate()}>
+          Disconnect
+        </button>
       </div>
     )
   } else {
@@ -125,6 +128,8 @@ export function ConnectWithSelect({
         )}
         <div style={{ marginBottom: '1rem' }} />
         <button
+          className="btn btn-lg btn-primary"
+          type="button"
           onClick={
             isActivating
               ? undefined
