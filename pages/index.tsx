@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <div>
+        <div style={{ display: 'flex', flexFlow: 'wrap', fontFamily: 'sans-serif' }}>
           <NetworkCard />
           <CoinbaseWalletCard />
           <MetaMaskCard />

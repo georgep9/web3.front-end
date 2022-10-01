@@ -1,7 +1,7 @@
 export function Card({ children }: { children: JSX.Element | JSX.Element[] }) {
   return (
     <div
-      className="card text-white bg-dark mb-3 mx-auto"
+      className="card text-white bg-dark border-info mb-3 mx-auto"
       style={{
         width: '16rem',
         padding: '0.5rem',

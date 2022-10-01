@@ -8,7 +8,7 @@ interface Props {
 export const Footer = () => {
   return (
     <>
-      <div>{'<web3-frontend> (C) 2022 georgep9'}</div>
+      <div>{'2022 > georgep9 > web3-frontend'}</div>
     </>
   )
 }
