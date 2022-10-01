@@ -7,7 +7,7 @@ Bootstrapped front-end repo to get started building dApps.
 
 - Typescript
 - React [Next.js](https://nextjs.org/)
-- [web3-react](https://github.com/NoahZinsmeister/web3-react)
+- [web3-react wallet components](https://github.com/NoahZinsmeister/web3-react) (by NoahZinsmeister)
 
 
 ## Getting Started
